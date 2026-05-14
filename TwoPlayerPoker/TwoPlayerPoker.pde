@@ -7,8 +7,11 @@ ArrayList<Card> deck = new ArrayList<Card>();
 Card[] player1 = new Card[5];
 Card[] player2 = new Card[5];
 
+String player1Result = "";
+String player2Result = "";
+
 class Card{
-  String rank; 
+  String rank;
   String suit;
   int value;
   
@@ -30,22 +33,59 @@ void createDeck(){
 }
 
 void drawCards(Card[] player){
-  for(int c = 0; c <= 4; c++){
-  int x = (int)random(1,52);
-  player[0] = deck.get(x);
-  deck.remove(x);
-}
+  for(int c = 0; c < 5; c++){
+    int x = (int)random(deck.size());
+    player[c] = deck.get(x);
+    deck.remove(x);
+  }
 }
  
-void setup() {
-  size(500,600);
-  createDeck(); 
+void drawHand(Card[] player, int y){
+  for(int i = 0; i < 5; i++){
+    int x = 50 + i * 150;
+    
+    fill(255);
+    rect(x, y, 100, 200);
+    
+    fill(0);
+    textSize(20);
+    text(player[i].rank, x + 40, y + 35);
+    text(player[i].suit, x + 10, y + 85);
+  }
+}
+
+void startGame(){
+  deck.clear();
+  createDeck();
   
   drawCards(player1);
   drawCards(player2);
 }
 
+void keyPressed(){
+  if(key == 'r' || key == 'R'){
+    startGame();
+  }
+}
+
+void setup() {
+  size(800,800);
+  startGame();
+}
+
 void draw(){
   background(255);
   
+  fill(0);
+  textSize(25);
+  text("Player 1", width / 2 - 50, 50);
+  drawHand(player1, 80);
+  
+  textSize(25);
+  text("Player 2", width / 2 - 50, 320);
+  drawHand(player2, 350);
+  
+  textSize(25);
+  fill(0);
+  text("Press 'r' to deal new cards", width / 2 - 130, 720);
 }
