@@ -66,6 +66,7 @@ boolean hasOnePair(ArrayList<Card> player) {
   return false;
 }
 
+
 int countPairs(ArrayList<Card> player) {
   int pairs = 0;
   boolean[] checked = new boolean[player.size()];
@@ -98,12 +99,35 @@ boolean hasTwoPair(ArrayList<Card> player) {
   }
 }
 
+boolean hasSet(ArrayList<Card> player) {
+  for (int i = 0; i < player.size(); i++) {
+    int count = 0;
+    
+    for (int j = 0; j < player.size(); j++) {
+      if (player.get(i).value == player.get(j).value) {
+        count++;
+      }
+    }
+    
+    if (count == 3) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
 String checkHand(ArrayList<Card> player) {
-  if (hasTwoPair(player)) {
+  if (hasSet(player)) {
+    return "Set";
+  }
+  else if (hasTwoPair(player)) {
     return "Two Pair";
-  } else if (hasOnePair(player)) {
+  } 
+  else if (hasOnePair(player)) {
     return "One Pair";
-  } else {
+  } 
+  else {
     return "High Card";
   }
 }
